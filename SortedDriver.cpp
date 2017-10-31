@@ -1,3 +1,5 @@
+//Dustin Gray
+//10/30/17
 // SortedDriver.cpp
 
 // tom bailey   1445  25 mar 2014
@@ -63,8 +65,51 @@ getWords(size_t numWords, size_t wordLength, string alphabet)
 double
 mostIsolated(vector<double> & number)
 {
-	// STUB  STUB  STUB
-	return -123.456;
+	double current = 0;
+	double right = 0;
+	double left = 0;
+	double differenceMain = 0;
+	double differenceRight = 0;
+	double differenceLeft = 0;
+	double mostIsolated = 0;
+
+	for (int i = 0; i < number.size(); i++) {
+		if (i == 0) {
+			current = number[i];
+			right = number[i + 1];
+			differenceMain = right - current;
+			mostIsolated = current;
+		}
+
+		else if (i == number.size() - 1) {
+			right = number[i];
+			current = number[i - 1];
+			differenceRight = right - current;
+			if (differenceRight > differenceMain) {
+				mostIsolated = right;
+			}
+		}
+			else {
+				current = number[i - 1];
+				right = number[i];
+				left = number[i + 1];
+				differenceRight = right - current;
+				differenceLeft = left - right;
+
+
+				if (differenceRight < differenceLeft && differenceRight >= differenceMain) {
+					differenceMain = differenceRight;
+					mostIsolated = right;
+				}
+				else if (differenceLeft < differenceRight && differenceLeft >= differenceMain) {
+					differenceMain = differenceLeft;
+					mostIsolated = right;
+				}
+			}
+
+		}
+
+	return mostIsolated;
 }
 
 
@@ -74,9 +119,24 @@ mostIsolated(vector<double> & number)
 int
 unmatched(list<string> & A, list<string> & B)
 {
-	// STUB  STUB  STUB
-	return -1;
+	int total = 0;
+
+	list<string>::iterator iterA = A.begin();
+	list<string>::iterator iterB = B.begin();
+
+	for (iterA; iterA != A.end(); ++iterA){
+
+		while ((*iterA > *iterB) && (iterB != B.end())){
+			iterB++;
+		}
+
+		if (*iterA != *iterB){
+			total++;
+		}
+	}
+	return total;
 }
+
 
 
 int
@@ -167,6 +227,5 @@ main()
 			<< "calculated in " << time() << " seconds"
 			<< endl << endl;
 	}
-
 	return 0;
 }
